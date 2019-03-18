@@ -2,11 +2,28 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
+    <title>Log in!</title>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 <body>
-    <h1>
-        这是一个登陆页面
-    </h1>
+<div class="wrap">
+    <div class="container">
+        <h1>Log in</h1>
+        <!-- 当点击submit时，先调用sing_up.js文件中的verify()函数进行输入合法性验证-->
+        <!--如果验证成功，触发输入验证码页面-->
+        <!--参照APPController类-->
+        <!--如果一个控件需要传值给后端，那么需要有name属性 -->
+        <!-- 使用post提交，隐藏参数-->
+        <form  method="post">
+            <input type="text" placeholder="Your username" id="name" name="name"/>
+            <input type="password" placeholder="password" id="pwd1" name="pwd1"/>
+            <input type="submit" value="Log in"/>
+            <p align="center" >
+                <span class="text" style="color: blue"> Don't have an account ?</span>
+                <a href="sign_up" class="url">Go and sign up</a>
+            </p>
+        </form>
+    </div>
+</div>
 </body>
 </html>

@@ -28,6 +28,8 @@
             <version>4.7</version>
             <scope>test</scope>
         </dependency>
+
+        <!--下面三个依赖就是SpringBoot框架和Thymeleaf模板 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -40,6 +42,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
+
+        <!--邮件功能依赖库-->
+        <!-- https://mvnrepository.com/artifact/org.springframework/spring-context-support -->
+
     </dependencies>
     <build>
         <plugins>

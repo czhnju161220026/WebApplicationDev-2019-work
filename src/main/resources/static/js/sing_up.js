@@ -7,21 +7,36 @@ function verify() {
     let pwd2 = document.getElementById("pwd2").value;
     //alert(name+", "+mail+", " +pwd1+", "+pwd2);
 
-    //目前只用alert提示非空
-    //考虑使用js控制css或者html，直接显示在页面上
     if(name == null || name=="") {
-        alert("姓名不能为空！");
+        confirm("Name mustn't be empty!");
         return false;
     }
 
     //实际对电子邮箱的验证要用到正则匹配。
     if(mail == null || mail == "") {
-        alert("电子邮件不能为空!");
+        confirm("E-mail mustn't be empty!");
         return false;
     }
 
     if(pwd1 == null || pwd1 == "" || pwd1 != pwd2) {
-        alert("密码输入有误，请检查");
+        confirm("Make sure the password are the same.")
+        return false;
+    }
+
+    var Regx = /^[A-Za-z0-9]*$/;
+    if(!Regx.test(name)) {
+        confirm("Name can only contains numbers and letters.");
+        return false;
+    }
+
+    if(pwd1.length < 6) {
+        confirm("The length of the password mustn't be less than 6.");
+        return false;
+    }
+
+    Regx = /^[A-Za-z0-9_-]+@[A-Za-z0-9_-]+(\.[A-Za-z0-9_-]+)+$/;
+    if(!Regx.test(mail)) {
+        confirm("Please check your E-mail.");
         return false;
     }
 

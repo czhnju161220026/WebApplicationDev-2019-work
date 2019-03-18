@@ -1,4 +1,4 @@
-package cn.edu.nju.web;
+package cn.edu.nju.web.WebSite;
 
 import org.springframework.boot.*;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;

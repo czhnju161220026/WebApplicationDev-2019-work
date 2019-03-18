@@ -1,11 +1,15 @@
-package cn.edu.nju.web;
+package cn.edu.nju.web.WebSite;
 
+import cn.edu.nju.web.Email.EmailSender;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.Random;
+import java.util.Timer;
 
 @Controller
 @EnableAutoConfiguration
@@ -29,6 +33,14 @@ public class AppController {
         String pwd2 = request.getParameter("pwd2");
 
         //TODO: 应该有一个EmailSender类，完成发送验证码的工作
+        StringBuilder code = new StringBuilder("");
+        Random random = new Random(System.nanoTime());
+        for(int i = 0;i < 6;i++) {
+            code.append(random.nextInt(10));
+        }
+        System.out.println(code.toString());
+        EmailSender emailSender = new EmailSender();
+        emailSender.sendVerificationCode(code.toString(), mail);
 
         /*设置动态页面*/
         request.setAttribute("name",name);

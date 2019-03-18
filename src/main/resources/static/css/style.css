@@ -37,9 +37,6 @@ body {
     padding: 6px 10px;
     line-height: 24px;
     margin: 32px auto;
-    -webkit-transition: all 0s ease-in 0.1ms;
-    -moz-transition: all 0s ease-in 0.1ms;
-    transition: all 0s ease-in 0.1ms;
 }
 
 .container input[type="text"] ,.container input[type="password"] {
@@ -57,10 +54,12 @@ body {
 .container input:focus {
     width: 400px;
 }
+
 .container input[type='submit']:hover {
     cursor: pointer;
     width: 400px;
 }
+
 
 .to_login {
     color: darkblue;

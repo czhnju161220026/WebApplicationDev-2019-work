@@ -11,4 +11,9 @@ public class AppController {
     public String signUp(){
         return "sign_up";
     }
+
+    @GetMapping("/input_verification_code")
+    public String inputVerificationCode() {
+        return "input_verification_code";
+    }
 }

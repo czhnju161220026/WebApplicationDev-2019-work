@@ -2,18 +2,22 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Sign Up!</title>
     <link rel="stylesheet" type="text/css" href="/css/sign_up.css">
+    <script src="/js/sing_up.js" type="text/javascript"></script>
 </head>
 <body>
 <div class="wrap">
     <div class="container">
         <h1>Sign Up</h1>
-        <form>
-            <input type="text" placeholder="Your username"/>
-            <input type="text" placeholder="Your email"/>
-            <input type="password" placeholder="password"/>
-            <input type="password" placeholder="Please confirm your password"/>
+        <!-- 当点击submit时，先调用sing_up.js文件中的verify()函数进行输入合法性验证-->
+        <!--如果验证成功，触发输入验证码页面-->
+        <!--参照APPController类-->
+        <form onsubmit="return verify()" action="input_verification_code">
+            <input type="text" placeholder="Your username" id="name"/>
+            <input type="text" placeholder="Your email" id="mail"/>
+            <input type="password" placeholder="password" id="pwd1"/>
+            <input type="password" placeholder="Please confirm your password" id="pwd2"/>
             <input type="submit" value="Sign up"/>
             <p align="center" >
                 <span class="text" style="color: blue"> Already a member ?</span>

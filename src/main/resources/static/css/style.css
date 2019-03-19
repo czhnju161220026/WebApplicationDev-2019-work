@@ -15,8 +15,12 @@ body {
     position: fixed;
     opacity: 0.8;
     background: linear-gradient( 180deg,darkblue,dodgerblue,white);
+    z-index: 1;
 }
 
+.blur {
+    filter:blur(2px);
+}
 .container {
     width: 60%;
     margin: 0 auto;
@@ -85,9 +89,21 @@ body {
     margin-top: -150px;
     margin-left: -200px;
     border-radius: 0.5em;
+    z-index: 3;
 }
 
 .message {
     color: white;
+}
+
+.button {
+    width: 320px;
+    display: block;
+    height: 36px;
+    border: 0;
+    outline: 0;
+    padding: 6px 10px;
+    line-height: 24px;
+    margin: 32px auto;
 }
 

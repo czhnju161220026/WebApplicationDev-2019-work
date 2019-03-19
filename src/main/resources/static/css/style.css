@@ -42,14 +42,14 @@ body {
 .container input[type="text"] ,.container input[type="password"] {
     background-color: #FFFFFF;
     font-size: 16px;
-    color: #50a3a2;
+    color: darkblue;
 }
 
 .container input[type="submit"] {
     font-size: 16px;
     letter-spacing: 2px;
-    color: #666666;
-    background-color: #FFFFFF;
+    color: white;
+    background-color: darkblue;
 }
 .container input:focus {
     width: 400px;
@@ -68,3 +68,26 @@ body {
 .text{
     color: #e2dfe4;
 }
+
+/*这个属性可以隐藏*/
+.hide {
+    display: none;
+}
+
+/*定义提示窗口的style*/
+.window {
+    position: fixed; /*设置成fixed，可以悬浮在其他控件之上显示*/
+    background: linear-gradient(grey,white);
+    width: 400px;
+    height: 200px;
+    top:50%;
+    left: 50%;
+    margin-top: -150px;
+    margin-left: -200px;
+    border-radius: 0.5em;
+}
+
+.message {
+    color: white;
+}
+

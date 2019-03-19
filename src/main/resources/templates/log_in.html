@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Log in!</title>
     <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <script type="text/javascript" src="/js/log_in.js"></script>
 </head>
 <body>
 <div class="wrap">
@@ -14,9 +15,14 @@
         <!--参照APPController类-->
         <!--如果一个控件需要传值给后端，那么需要有name属性 -->
         <!-- 使用post提交，隐藏参数-->
-        <form  method="post">
+        <form  onsubmit="return judge()">
             <input type="text" placeholder="Your username" id="name" name="name"/>
-            <input type="password" placeholder="password" id="pwd1" name="pwd1"/>
+            <div class="window hide" id="window">
+                <p  align="center" class="message" id="message">Wrong Passward, Please Confirm</p>
+                <br><br>
+                <input type="button" value="OK" onclick="retype()">
+            </div>
+            <input type="password" placeholder="password" id="pwd" name="pwd"/>
             <input type="submit" value="Log in"/>
             <p align="center" >
                 <span class="text" style="color: blue"> Don't have an account ?</span>

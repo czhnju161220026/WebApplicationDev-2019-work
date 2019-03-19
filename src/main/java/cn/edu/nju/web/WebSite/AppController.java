@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Random;
 import java.util.Timer;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @Controller
 @EnableAutoConfiguration
@@ -39,12 +41,22 @@ public class AppController {
             code.append(random.nextInt(10));
         }
         System.out.println(code.toString());
-        EmailSender emailSender = new EmailSender();
-        emailSender.sendVerificationCode(code.toString(), mail);
+        //发送电子邮件
+
+        ExecutorService sendService = Executors.newSingleThreadExecutor();
+        sendService.execute(new Runnable() {
+            @Override
+            public void run() {
+                EmailSender emailSender = new EmailSender();
+                emailSender.sendVerificationCode(code.toString(), mail);
+            }
+        });
+        sendService.shutdown();
 
         /*设置动态页面*/
         request.setAttribute("name",name);
         request.setAttribute("mail",mail);
+
         return "input_verification_code";
     }
 }

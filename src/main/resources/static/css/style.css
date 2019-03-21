@@ -19,7 +19,7 @@ body {
 }
 
 .blur {
-    filter:blur(2px);
+    filter:blur(3px);
 }
 .container {
     width: 60%;
@@ -80,14 +80,12 @@ body {
 
 /*定义提示窗口的style*/
 .window {
-    position: fixed; /*设置成fixed，可以悬浮在其他控件之上显示*/
+    position: fixed; /*使用固定位置*/
     background: linear-gradient(grey,white);
     width: 400px;
     height: 200px;
     top:50%;
     left: 50%;
-    margin-top: -150px;
-    margin-left: -200px;
     border-radius: 0.5em;
     z-index: 3;
 }

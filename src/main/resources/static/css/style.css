@@ -14,8 +14,49 @@ body {
     padding: 10% 0;
     position: fixed;
     opacity: 0.8;
-    background: linear-gradient( 180deg,darkblue,dodgerblue,white);
+    /*background: linear-gradient( 180deg,darkblue,dodgerblue,white);*/
+    background: linear-gradient(-45deg, #EE7752, #E73C7E, #23A6D5, #23D5AB);
+    background-size: 400% 400%;
     z-index: 1;
+    -webkit-animation: Gradient 15s ease infinite;
+    -moz-animation: Gradient 15s ease infinite;
+    animation: Gradient 15s ease infinite;
+}
+
+@-webkit-keyframes Gradient {
+    0% {
+        background-position: 0% 50%
+    }
+    50% {
+        background-position: 100% 50%
+    }
+    100% {
+        background-position: 0% 50%
+    }
+}
+
+@-moz-keyframes Gradient {
+    0% {
+        background-position: 0% 50%
+    }
+    50% {
+        background-position: 100% 50%
+    }
+    100% {
+        background-position: 0% 50%
+    }
+}
+
+@keyframes Gradient {
+    0% {
+        background-position: 0% 50%
+    }
+    50% {
+        background-position: 100% 50%
+    }
+    100% {
+        background-position: 0% 50%
+    }
 }
 
 .blur {
@@ -80,12 +121,15 @@ body {
 
 /*定义提示窗口的style*/
 .window {
+    alignment: center;
     position: fixed; /*使用固定位置*/
     background: linear-gradient(grey,white);
     width: 400px;
     height: 200px;
-    top:50%;
-    left: 50%;
+    top: 50%;
+    left:50%;
+    margin-left: -200px;
+    margin-top: -100px;
     border-radius: 0.5em;
     z-index: 3;
 }

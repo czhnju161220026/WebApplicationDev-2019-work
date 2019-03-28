@@ -1,10 +1,9 @@
 function verify() {
     //目前对输入的验证仅验证输入非空
-    //返回false代表验证失败，将不会触发action
-    let name = document.getElementById("name").value;
-    let mail = document.getElementById("mail").value;
-    let pwd1 = document.getElementById("pwd1").value;
-    let pwd2 = document.getElementById("pwd2").value;
+    var name = document.getElementById("name").value;
+    var mail = document.getElementById("mail").value;
+    var pwd1 = document.getElementById("pwd1").value;
+    var pwd2 = document.getElementById("pwd2").value;
     //alert(name+", "+mail+", " +pwd1+", "+pwd2);
 
     if(name == null || name=="") {

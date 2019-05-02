@@ -6,10 +6,8 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Random;
-import java.util.Timer;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -18,12 +16,12 @@ import java.util.concurrent.Executors;
 public class AppController {
     @GetMapping("/sign_up")
     public String signUp(){
-        return "sign_up";
+        return "signup";
     }
 
     @GetMapping("/log_in")
     public String logIn() {
-        return "log_in";
+        return "login";
     }
 
     @PostMapping("/input_verification_code")
@@ -56,7 +54,7 @@ public class AppController {
         /*设置动态页面*/
         request.setAttribute("name",name);
         request.setAttribute("mail",mail);
-
-        return "input_verification_code";
+        request.setAttribute("image","image/test.jpg");
+        return "verify";
     }
 }

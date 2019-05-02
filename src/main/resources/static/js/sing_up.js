@@ -1,5 +1,4 @@
 function verify() {
-    //目前对输入的验证仅验证输入非空
     var name = document.getElementById("name").value;
     var mail = document.getElementById("mail").value;
     var pwd1 = document.getElementById("pwd1").value;

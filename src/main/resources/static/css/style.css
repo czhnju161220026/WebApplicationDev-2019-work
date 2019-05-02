@@ -13,14 +13,10 @@ body {
     height: 100%;
     padding: 10% 0;
     position: fixed;
-    opacity: 0.8;
-    /*background: linear-gradient( 180deg,darkblue,dodgerblue,white);*/
-    background: linear-gradient(-45deg, #EE7752, #E73C7E, #23A6D5, #23D5AB);
-    background-size: 400% 400%;
     z-index: 1;
-    -webkit-animation: Gradient 15s ease infinite;
-    -moz-animation: Gradient 15s ease infinite;
-    animation: Gradient 15s ease infinite;
+    background-image: url("../image/background.jpg") ;
+    background-size: 100%;
+    background-repeat: no-repeat;
 }
 
 @-webkit-keyframes Gradient {
@@ -107,7 +103,7 @@ body {
 
 
 .url {
-    color: darkblue;
+    color: lightgray;
 }
 
 .text{

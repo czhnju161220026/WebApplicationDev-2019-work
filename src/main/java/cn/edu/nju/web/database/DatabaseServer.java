@@ -31,6 +31,7 @@ public class DatabaseServer {
 			article.setHeader(header);
 			article.setUpstream(upstream);
 			article.setTime( new SimpleDateFormat("yyyy-MM-dd").parse(date));
+			article.setId(id);
 		}
 		//TODO: 添加找不到文章时的异常处理
 		catch (Exception e) {

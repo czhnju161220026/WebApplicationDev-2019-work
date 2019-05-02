@@ -7,6 +7,15 @@ public class Article {
 	private String content;
 	private Date time;
 	private String upstream;
+	private Integer id;
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
 	public Date getTime() {
 		return time;

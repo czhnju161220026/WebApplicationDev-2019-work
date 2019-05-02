@@ -1,6 +1,6 @@
-package cn.edu.nju.web.WebSite;
+package cn.edu.nju.web.webservice;
 
-import cn.edu.nju.web.Email.EmailSender;
+import cn.edu.nju.web.email.EmailSender;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.stereotype.Controller;

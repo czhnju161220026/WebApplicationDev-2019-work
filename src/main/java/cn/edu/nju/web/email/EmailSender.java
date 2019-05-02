@@ -1,4 +1,4 @@
-package cn.edu.nju.web.Email;
+package cn.edu.nju.web.email;
 
 
 import org.springframework.mail.SimpleMailMessage;

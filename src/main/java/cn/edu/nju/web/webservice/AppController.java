@@ -14,17 +14,17 @@ import java.util.concurrent.Executors;
 @Controller
 @EnableAutoConfiguration
 public class AppController {
-    @GetMapping("/sign_up")
+    @GetMapping("/signup")
     public String signUp(){
         return "signup";
     }
 
-    @GetMapping("/log_in")
+    @GetMapping("/login")
     public String logIn() {
         return "login";
     }
 
-    @PostMapping("/input_verification_code")
+    @PostMapping("/verify")
     public String inputVerificationCode(HttpServletRequest request) {
         /*获得提交的表单信息*/
         String name = request.getParameter("name");

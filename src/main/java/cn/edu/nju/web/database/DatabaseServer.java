@@ -22,6 +22,7 @@ public class DatabaseServer {
 			connection = DriverManager.getConnection(DBUrl,userName,passwd);
 			Statement statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery("SELECT * from NEWS where NID="+id);
+			resultSet.next();
 			String header = resultSet.getString("HEADER");
 			String date = resultSet.getString("NTIME");
 			String content = resultSet.getString("CONTENT");
@@ -39,7 +40,7 @@ public class DatabaseServer {
 			connection.close();
 		}
 
-		return null;
+		return article;
 	}
 
 	public static void main(String[] args) throws Exception{

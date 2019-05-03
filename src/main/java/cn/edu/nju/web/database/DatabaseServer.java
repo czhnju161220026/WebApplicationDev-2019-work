@@ -4,6 +4,8 @@ import cn.edu.nju.web.util.*;
 
 import java.sql.*;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class DatabaseServer {
@@ -13,7 +15,7 @@ public class DatabaseServer {
 	private static String passwd = "webuser";
 
 	//根据文章ID返回文章内容
-	public static Article getArticleById(int id) throws Exception{
+	public static Article getArticleById(int id) throws SQLException{
 
 		Article article = new Article();
 		Connection connection = null;
@@ -42,6 +44,34 @@ public class DatabaseServer {
 		}
 
 		return article;
+	}
+
+	public static List<Article> getArticlesByCategory(String category) throws SQLException{
+		ArrayList<Article> results = new ArrayList<>();
+		Connection connection = null;
+		try {
+			Class.forName(DBDriver);
+			connection = DriverManager.getConnection(DBUrl,userName,passwd);
+			Statement statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery("SELECT * from NEWS where CATEGORY='"+category+"' order by NTIME desc" );
+			while (resultSet.next()) {
+				Article article = new Article();
+				article.setId(resultSet.getInt("NID"));
+				article.setHeader(resultSet.getString("HEADER"));
+				article.setTime(new SimpleDateFormat("yyyy-MM-dd").parse(resultSet.getString("NTIME")));
+				article.setUpstream(resultSet.getString("UPSTREAM"));
+				article.setContent(resultSet.getString("CONTENT"));
+				results.add(article);
+			}
+		}
+		//TODO: 添加找不到文章时的异常处理
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			connection.close();
+		}
+		return results;
 	}
 
 	public static void main(String[] args) throws Exception{

@@ -8,6 +8,7 @@ public class Article {
 	private Date time;
 	private String upstream;
 	private Integer id;
+	private String brefIntroduce;
 
 	public Integer getId() {
 		return id;
@@ -15,6 +16,14 @@ public class Article {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public String getBrefIntroduce() {
+		return brefIntroduce;
+	}
+
+	public void setBrefIntroduce(String brefIntroduce) {
+		this.brefIntroduce = brefIntroduce;
 	}
 
 	public Date getTime() {
@@ -47,11 +56,13 @@ public class Article {
 
 	public void setContent(String content) {
 		this.content = content;
+		this.brefIntroduce = content.substring(0,50)+"...";
 	}
 
 	public Article(String header, String content) {
 		this.header = header;
 		this.content = content;
+		this.brefIntroduce = content.substring(0,50)+"...";
 	}
 	public Article() {}
 

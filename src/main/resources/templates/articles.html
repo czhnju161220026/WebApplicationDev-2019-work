@@ -1,0 +1,56 @@
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${title}"></title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <!-- Scripts -->
+
+</head>
+<body>
+
+<!-- Header -->
+<header id="header">
+    <div class="logo"><a href="#"> Spring News</a></div>
+</header>
+
+<!-- Main -->
+<section id="main">
+    <div class="inner">
+        <!-- One -->
+        <section id="one" class="wrapper style1">
+            <header class="special">
+                <h2 th:text="${category}"></h2>
+                <p th:text="${introduce}"></p>
+            </header>
+            <!--在这里使用thymeleaf each语法，显示所有的新闻变欧体和简介 -->
+            <!--后期考虑添加分页效果 -->
+            <div class="content">
+                <div th:each="article : ${articles}">
+                    <h4 th:text="${article.header}"></h4>
+                    <p>[<span th:text="${article.upstream}"></span> ] <span th:text="${article.brefIntroduce}"></span></p>
+                    <hr>
+                </div>
+            </div>
+        </section>
+    </div>
+</section>
+
+<!-- Footer -->
+<!--添加分享-->
+<footer id="footer">
+    <div class="container">
+        <ul class="icons">
+            <li><a href="#" class="icon fa-weixin"><span class="label">微信</span></a></li>
+            <li><a href="#" class="icon fa-qq"><span class="label">QQ</span></a></li>
+            <li><a href="#" class="icon fa-weibo"><span class="label">微博</span></a></li>
+        </ul>
+    </div>
+    <div class="copyright">
+        &copy; Untitled. All rights reserved. You can get the source code from <a href="https://github.com/czhnju161220026/WebApplicationDev-2019-work">Github</a>
+    </div>
+</footer>
+
+</body>
+</html>

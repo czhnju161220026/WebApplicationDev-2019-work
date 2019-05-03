@@ -73,9 +73,4 @@ public class DatabaseServer {
 		}
 		return results;
 	}
-
-	public static void main(String[] args) throws Exception{
-		//测试
-		System.out.println(getArticleById(1));
-	}
 }

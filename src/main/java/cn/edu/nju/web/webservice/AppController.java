@@ -6,6 +6,8 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
@@ -14,6 +16,13 @@ import java.util.concurrent.Executors;
 @Controller
 @EnableAutoConfiguration
 public class AppController {
+
+    //主页
+    @RequestMapping(value = "/",method= RequestMethod.GET )
+    public String index(HttpServletRequest request) {
+        return "index";
+    }
+
     @GetMapping("/signup")
     public String signUp(){
         return "signup";

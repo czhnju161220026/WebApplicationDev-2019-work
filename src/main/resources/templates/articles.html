@@ -28,8 +28,11 @@
             <!--在这里使用thymeleaf each语法，显示所有的新闻变欧体和简介 -->
             <!--后期考虑添加分页效果 -->
             <div class="content">
+                <h5 th:if="${articles.empty}">该板块暂无文章，去其他板块逛逛吧！</h5>
                 <div th:each="article : ${articles}">
-                    <h4 th:text="${article.header}"></h4>
+                    <a th:href="${article.url}">
+                        <h4 th:text="${article.header}"></h4>
+                    </a>
                     <p>[<span th:text="${article.upstream}"></span> ] <span th:text="${article.brefIntroduce}"></span></p>
                     <hr>
                 </div>

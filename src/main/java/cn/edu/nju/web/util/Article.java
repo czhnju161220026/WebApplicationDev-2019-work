@@ -9,6 +9,15 @@ public class Article {
 	private String upstream;
 	private Integer id;
 	private String brefIntroduce;
+	private String url;
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
 
 	public Integer getId() {
 		return id;

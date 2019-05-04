@@ -61,6 +61,7 @@ public class DatabaseServer {
 				article.setTime(new SimpleDateFormat("yyyy-MM-dd").parse(resultSet.getString("NTIME")));
 				article.setUpstream(resultSet.getString("UPSTREAM"));
 				article.setContent(resultSet.getString("CONTENT"));
+				article.setUrl("article?id="+article.getId());
 				results.add(article);
 			}
 		}

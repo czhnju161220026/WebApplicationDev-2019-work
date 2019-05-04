@@ -1,11 +1,58 @@
-<!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title th:text="${title}"></title>
+    <title>Spring News</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <!-- Scripts -->
+
 </head>
 <body>
-    <p th:text="${id}"></p>
+
+<!-- Header -->
+<header id="header">
+    <div class="logo"><a href="#"> Spring News</a></div>
+    <div class="top"> <a href="login"> Login</a> <span>|</span> <a href="signup">Sign Up</a></div>
+</header>
+
+<!-- Main -->
+<section id="main">
+    <div class="inner">
+        <!-- One -->
+        <section id="one" class="wrapper style1">
+            <header class="special">
+                <h2 th:text="${header}"></h2>
+                <p><span th:text="${time}"></span>    <span th:text="${upstream}"></span></p>
+            </header>
+            <!--显示文章内容-->
+            <div class="content">
+                <p th:text="${content}"></p>
+            </div>
+        </section>
+        <!--评论区 -->
+        <section id="comment" class="wrapper style2">
+            <div class="content">
+                <p>评论区</p>
+            </div>
+        </section>
+    </div>
+</section>
+
+<!-- Footer -->
+<!--添加分享-->
+<footer id="footer">
+    <div class="container">
+        <ul class="icons">
+            <li><a href="#" class="icon fa-weixin"><span class="label">微信</span></a></li>
+            <li><a href="#" class="icon fa-qq"><span class="label">QQ</span></a></li>
+            <li><a href="#" class="icon fa-weibo"><span class="label">微博</span></a></li>
+        </ul>
+    </div>
+    <div class="copyright">
+        &copy; Untitled. All rights reserved. You can get the source code from <a href="https://github.com/czhnju161220026/WebApplicationDev-2019-work">Github</a>
+    </div>
+</footer>
+
 </body>
 </html>

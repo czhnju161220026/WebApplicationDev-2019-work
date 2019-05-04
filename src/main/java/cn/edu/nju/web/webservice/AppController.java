@@ -2,6 +2,7 @@ package cn.edu.nju.web.webservice;
 
 import cn.edu.nju.web.database.DatabaseServer;
 import cn.edu.nju.web.email.EmailSender;
+import cn.edu.nju.web.util.Article;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.stereotype.Controller;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -18,9 +20,10 @@ import java.util.concurrent.Executors;
 @Controller
 @EnableAutoConfiguration
 public class AppController {
-
+    //Get和Post都能从服务器获取数据，但是get获取数据通过地址栏参数，post通过报文，因此post更适合需要加密的场合
+    //post可以向服务器发送数据
     //主页
-    @RequestMapping(value = "/",method= RequestMethod.GET )
+    @GetMapping("/")
     public String index(HttpServletRequest request) {
         return "index";
     }
@@ -114,10 +117,18 @@ public class AppController {
     //通过GetMapping获取文章id，然后用request set加载文章内容
     @GetMapping(value="/article")
     public String article(HttpServletRequest request) {
-        String id = request.getParameter("id");
-        System.out.println(id);
-        request.setAttribute("title","测试1");
-        request.setAttribute("id",id);
+        int id = Integer.parseInt(request.getParameter("id"));
+        try {
+            Article article = DatabaseServer.getArticleById(id);
+            request.setAttribute("header",article.getHeader());
+            request.setAttribute("upstream", article.getUpstream());
+            request.setAttribute("content", article.getContent());
+            request.setAttribute("time", "["+new SimpleDateFormat("yyyy年MM月dd日").format(article.getTime()) +"]");
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            //添加异常处理
+        }
         return "article";
     }
 }

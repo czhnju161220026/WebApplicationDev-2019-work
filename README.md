@@ -1,12 +1,23 @@
 # 网络应用开发课程实践项目
 ## 想法
-+ 使用SpringBoot框架(Web框架，内置了TomCat服务器) + Thymeleaf模板(动态页面) + MySql实现一个可以注册，可以登录的网站，网站具体功能待讨论。<br>
-+ 开发语言为Java
-+ 项目使用Maven构建工具。 
++ 后端使用MySQL + JDBC
++ Web框架实用SpringBoot框架
++ 前断html + css +thymeleaf + js
 
+## 相关技术
++ MySQL + JDBC之前接触过，不介绍了
++ SpringBoot是一个纯Java的Web框架
++ 前端主要介绍一下thymeleaf，这是一个从html模板生成动态页面的技术，也是SpringBoot官方推荐的动态页面技术，大该就是在html中写一些变量，然后在Web框架中设置这些变量，然后返回这个设置好的页面。可以参见article.html和articles.html中的动态显示文章的部分。
 ## 进度
-目前尝试了一下springboot框架和简单的html，css样式表。<br>
-过程中遇到了一点坑，就是静态资源(目前有css和js)的路径问题。<br>
-查阅资料发现，springboot中提供了系统路径，包括static,templates等。在其中的文件可以直接引用，省去了寻址的麻烦。<br>
-参见：[这篇博文](https://blog.csdn.net/yiifaa/article/details/78299052)和[这个例子](https://blog.csdn.net/qq_29314861/article/details/79497281) <br>
-实现了电子邮件发送验证码的功能，但是发送速度很慢，页面要长时间等待跳转。考虑单独开启一个进程发送。
+#### 目前实现了：
++ 数据库的设计
++ 基本的文章内容显示
++  发送验证码到邮箱
+####需要实现：
++ 登录注册的完善
++ 评论区功能（评论，点赞等等）
+## 参考
++ [thymeleaf教程](https://www.baeldung.com/tag/thymeleaf/)
++ [SpringBoot官方文档翻译](http://blog.geekidentity.com/spring/spring_boot_translation/)
+
+

@@ -9,8 +9,8 @@ import java.util.List;
 
 
 public class DatabaseServer {
-	private static String DBDriver = "com.mysql.jdbc.Driver";
-	private static String DBUrl = "jdbc:mysql://localhost:3306/web_db?useUnicode=true&characterEncoding=utf8";
+	private static String DBDriver = "com.mysql.cj.jdbc.Driver";
+	private static String DBUrl = "jdbc:mysql://localhost:3306/web_db?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=UTC";
 	private static String userName = "webuser";
 	private static String passwd = "webuser";
 

@@ -65,7 +65,7 @@ public class Article {
 
 	public void setContent(String content) {
 		this.content = content;
-		this.brefIntroduce = content.substring(0,50)+"...";
+		this.brefIntroduce = content.substring(0,50 > content.length() ? content.length() - 1 : 50)+"...";
 	}
 
 	public Article(String header, String content) {

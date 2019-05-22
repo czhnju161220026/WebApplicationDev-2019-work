@@ -12,6 +12,8 @@ class sina_news:
         self.category = category
         self.content = None
         self.upstream = '新浪新闻'
+        self.title = self.title.replace('\'', ' ')
+        self.title = self.title.replace('\"', ' ')
 
     # 比较器，根据title进行去重
     def __eq__(self, other):
@@ -34,6 +36,10 @@ class sina_news:
         for i in range(len(paragraphs)-5):
             content += paragraphs[i].text
         self.content = content
+        self.content = self.content.replace('(', '[')
+        self.content = self.content.replace(')', ']')
+        self.content = self.content.replace('\'', ' ')
+        self.content = self.content.replace('\"', ' ')
 
     def __str__(self):
         return self.title + " " + self.date + " " + self.category +" "+ self.url

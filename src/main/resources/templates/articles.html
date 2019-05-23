@@ -2,18 +2,18 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <title th:text="${title}"></title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <!-- Scripts -->
 
 </head>
-<body>
+<body onload="setPage()">
 
 <!-- Header -->
 <header id="header">
     <div class="logo"><a href="#"> Spring News</a></div>
-    <div class="top"> <a href="login"> Login</a> <span>|</span> <a href="signup">Sign Up</a></div>
+    <div class="top"><a href="login"> Login</a> <span>|</span> <a href="signup">Sign Up</a></div>
 </header>
 
 <!-- Main -->
@@ -33,13 +33,25 @@
                     <a th:href="${article.url}">
                         <h4 th:text="${article.header}"></h4>
                     </a>
-                    <p>[<span th:text="${article.upstream}"></span> ] <span th:text="${article.brefIntroduce}"></span></p>
+                    <p>[<span th:text="${article.upstream}"></span> ] <span th:text="${article.brefIntroduce}"></span>
+                    </p>
                     <hr>
+                </div>
+                <hr>
+                <div>
+                    <ul class="pagination">
+                        <li><a th:href="${lastPage}"><<</a></li>
+                        <li th:each="page :${pages}" th:id="${page.id}">
+                            <a th:href="${page.url}" th:text="${page.index}" th:class="${page.index} eq ${currentPage}? 'active':''"></a>
+                        </li>
+                        <li><a th:href="${nextPage}"> >> </a></li>
+                    </ul>
                 </div>
             </div>
         </section>
     </div>
 </section>
+
 
 <!-- Footer -->
 <!--添加分享-->
@@ -52,7 +64,8 @@
         </ul>
     </div>
     <div class="copyright">
-        &copy; Untitled. All rights reserved. You can get the source code from <a href="https://github.com/czhnju161220026/WebApplicationDev-2019-work">Github</a>
+        &copy; Untitled. All rights reserved. You can get the source code from <a
+            href="https://github.com/czhnju161220026/WebApplicationDev-2019-work">Github</a>
     </div>
 </footer>
 

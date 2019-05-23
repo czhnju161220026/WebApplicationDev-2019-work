@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <!-- Scripts -->
+    <script type="text/javascript" src="js/share.js"></script>
 
 </head>
 <body>
@@ -44,9 +45,9 @@
 <footer id="footer">
     <div class="container">
         <ul class="icons">
-            <li><a href="#" class="icon fa-weixin"><span class="label">微信</span></a></li>
-            <li><a href="#" class="icon fa-qq"><span class="label">QQ</span></a></li>
-            <li><a href="#" class="icon fa-weibo"><span class="label">微博</span></a></li>
+            <li><a onclick="shareToRenren(event)" class="icon fa-renren"><span class="label">人人</span></a></li>
+            <li><a onclick="shareToQzone(event)" class="icon fa-qq"><span class="label">QQ</span></a></li>
+            <li><a onclick="shareToSinaWB(event)" class="icon fa-weibo"><span class="label">微博</span></a></li>
         </ul>
     </div>
     <div class="copyright">

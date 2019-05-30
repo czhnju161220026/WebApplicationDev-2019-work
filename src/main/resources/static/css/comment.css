@@ -144,7 +144,7 @@ a.gitment-header-issue-link:hover {
     position: relative;
     border: 1px solid rgba(243, 251, 255, 0.76);
     border-radius: 4px;
-    background: rgba(144, 144, 144, 0.075)
+    background: rgba(241, 241, 241, 0.13)
 }
 
 .gitment-editor-main::before,

@@ -151,15 +151,13 @@ public class AppController {
 	public String article(HttpServletRequest request) {
 		int id = Integer.parseInt(request.getParameter("id"));
 		try {
+			//文章内容
 			Article article = DatabaseServer.getArticleById(id);
 			request.setAttribute("article", article);
-			// 评论区
+			//评论区
 			List<Comment> comments = DatabaseServer.getCommentsByID(id);
 			request.setAttribute("coms", comments);
-			/*request.setAttribute("header", article.getHeader());
-			request.setAttribute("upstream", article.getUpstream());
-			request.setAttribute("content", article.getContent());
-			request.setAttribute("time", "[" + new SimpleDateFormat("yyyy年MM月dd日").format(article.getTime()) + "]");*/
+			//
 		} catch (SQLException e) {
 			e.printStackTrace();
 			//添加异常处理

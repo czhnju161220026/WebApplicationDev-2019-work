@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
+import java.util.TimeZone;
 
 
 public class DatabaseServer {
@@ -83,6 +84,7 @@ public class DatabaseServer {
 			connection = DriverManager.getConnection(DBUrl, userName, passwd);
 			Date dNow = new Date();
 			SimpleDateFormat ft = new SimpleDateFormat ("yyyy-MM-dd HH:mm:ss");
+			ft.setTimeZone(TimeZone.getTimeZone("Etc/Greenwich"));
 			Statement statement = connection.createStatement();
 			String sql = "insert into Comment values ( "+userID+", "+articalID+", '"+content+"', '"+ft.format(dNow)+"')";
 			statement.executeUpdate(sql);

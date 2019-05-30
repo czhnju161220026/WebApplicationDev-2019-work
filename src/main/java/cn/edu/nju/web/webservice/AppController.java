@@ -3,14 +3,12 @@ package cn.edu.nju.web.webservice;
 import cn.edu.nju.web.database.DatabaseServer;
 import cn.edu.nju.web.email.EmailSender;
 import cn.edu.nju.web.util.Article;
+import cn.edu.nju.web.util.Comment;
 import cn.edu.nju.web.util.Page;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -154,14 +152,37 @@ public class AppController {
 		int id = Integer.parseInt(request.getParameter("id"));
 		try {
 			Article article = DatabaseServer.getArticleById(id);
-			request.setAttribute("header", article.getHeader());
+			request.setAttribute("article", article);
+			// 评论区
+			List<Comment> comments = DatabaseServer.getCommentsByID(id);
+			request.setAttribute("coms", comments);
+			/*request.setAttribute("header", article.getHeader());
 			request.setAttribute("upstream", article.getUpstream());
 			request.setAttribute("content", article.getContent());
-			request.setAttribute("time", "[" + new SimpleDateFormat("yyyy年MM月dd日").format(article.getTime()) + "]");
+			request.setAttribute("time", "[" + new SimpleDateFormat("yyyy年MM月dd日").format(article.getTime()) + "]");*/
 		} catch (SQLException e) {
 			e.printStackTrace();
 			//添加异常处理
 		}
 		return "article";
+	}
+
+	@PostMapping(path = "/sendComment")
+	public String sendComment(HttpServletRequest request) {
+		//TODO:获取用户登录状态
+		boolean login = true;
+		if(!login) {
+			return "redirect:/login";
+		}
+		String id = request.getParameter("articleID");
+		String content = request.getParameter("content");
+		try {
+			//TODO:获取用户ID
+			int userid = 33;
+			DatabaseServer.addComment(userid, Integer.parseInt(id), content);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return "redirect:/article?id="+id;
 	}
 }

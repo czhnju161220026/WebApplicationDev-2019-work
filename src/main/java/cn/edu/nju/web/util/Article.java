@@ -1,5 +1,6 @@
 package cn.edu.nju.web.util;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Article {
@@ -8,7 +9,7 @@ public class Article {
 	private Date time;
 	private String upstream;
 	private Integer id;
-	private String brefIntroduce;
+	private String briefIntroduce;
 	private String url;
 
 	public String getUrl() {
@@ -27,21 +28,19 @@ public class Article {
 		this.id = id;
 	}
 
-	public String getBrefIntroduce() {
-		return brefIntroduce;
+	public String getBriefIntroduce() {
+		return briefIntroduce;
 	}
 
-	public void setBrefIntroduce(String brefIntroduce) {
-		this.brefIntroduce = brefIntroduce;
+	public void setBriefIntroduce(String briefIntroduce) {
+		this.briefIntroduce = briefIntroduce;
 	}
 
-	public Date getTime() {
-		return time;
+	public String getTime() {
+		return "[" + new SimpleDateFormat("yyyy年MM月dd日").format(this.time) + "]";
 	}
 
-	public void setTime(Date time) {
-		this.time = time;
-	}
+	public void setTime(Date time) { this.time = time; }
 
 	public String getUpstream() {
 		return upstream;
@@ -65,13 +64,13 @@ public class Article {
 
 	public void setContent(String content) {
 		this.content = content;
-		this.brefIntroduce = content.substring(0,50 > content.length() ? content.length() - 1 : 50)+"...";
+		this.briefIntroduce = content.substring(0,50 > content.length() ? content.length() - 1 : 50)+"...";
 	}
 
 	public Article(String header, String content) {
 		this.header = header;
 		this.content = content;
-		this.brefIntroduce = content.substring(0,50)+"...";
+		this.briefIntroduce = content.substring(0,50)+"...";
 	}
 	public Article() {}
 

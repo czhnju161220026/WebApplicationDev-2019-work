@@ -1936,7 +1936,7 @@
 		button.fit,
 		.button.fit {
 			display: block;
-			margin: 0 0 1rem 0;
+			margin: 0 auto;
 			width: 100%;
 		}
 
@@ -2099,7 +2099,7 @@
 		outline: 0;
 		padding: 0 1rem;
 		text-decoration: none;
-		width: 100%;
+		width: 54%;
 	}
 
 		input[type="text"]:invalid,
@@ -2151,6 +2151,7 @@
 
 	textarea {
 		padding: 0.75rem 1rem;
+		margin-bottom: 10px;
 	}
 
 	input[type="checkbox"],
@@ -2248,6 +2249,7 @@
 	textarea {
 		background: rgba(144, 144, 144, 0.075);
 		border-color: rgba(144, 144, 144, 0.25);
+		resize: none;
 	}
 
 		input[type="text"]:focus,
@@ -2256,7 +2258,6 @@
 		select:focus,
 		textarea:focus {
 			border-color: #54a354;
-			box-shadow: 0 0 0 1px #54a354;
 		}
 
 	.select-wrapper:before {

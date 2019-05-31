@@ -66,6 +66,7 @@ def export_to_DB(news):
                 exist = False
                 # 去重，看相同标题的新闻是否存在
                 sql = 'select * from NEWS where HEADER ="%s" ' % new.title
+                # print(new.title)
                 cursor.execute(sql)
                 if 0 != len(cursor.fetchall()):
                     exist = True

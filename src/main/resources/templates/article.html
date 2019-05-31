@@ -5,8 +5,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/comment.css">
     <!-- Scripts -->
-
+    <script type="text/javascript" src="js/share.js"></script>
+    <script type="text/javascript" src="js/comment.js"></script>
 </head>
 <body>
 
@@ -22,18 +24,50 @@
         <!-- One -->
         <section id="one" class="wrapper style1">
             <header class="special">
-                <h2 th:text="${header}"></h2>
-                <p><span th:text="${time}"></span>    <span th:text="${upstream}"></span></p>
+                <h2 th:text="${article.header}"></h2>
+                <p><span th:text="${article.time}"></span>    <span th:text="${article.upstream}"></span></p>
             </header>
             <!--显示文章内容-->
             <div class="content">
-                <p th:text="${content}"></p>
+                <p th:text="${article.content}"></p>
             </div>
         </section>
         <!--评论区 -->
-        <section id="comment" class="wrapper style2">
-            <div class="content">
-                <p>评论区</p>
+        <section id="commentArea" class="wrapper style2">
+            <h4>评论区</h4>
+
+            <!-- 输入评论 -->
+            <form  onsubmit="return judgeComment()" th:action="@{'sendComment?articleID='+${article.id}}" method="post">
+                <textarea name="content" id="content" placeholder="Leave your comment here" rows="4"></textarea>
+                <input type="submit" value="Send" style="display:block;margin:0 auto"/>
+            </form>
+
+            <h5>精彩评论</h5>
+            <div lang="en-US" class="gitment-container gitment-comments-container">
+                <span th:if="${coms.empty}">暂无评论哦，快成为第一个贡献评论的用户吧！</span>
+                <ul class="gitment-comments-list" th:each="com : ${coms}">
+                    <li class="gitment-comment">
+                        <a class="gitment-comment-avatar">
+                            <img class="gitment-comment-avatar-img" src="image/default-avatar.png">
+                        </a>
+                        <div class="gitment-comment-main">
+                            <div class="gitment-comment-header">
+                                <a class="gitment-comment-name">
+                                    [[${com.userID}]]
+                                </a>
+                                <span class="gitment-comment-time">&nbsp;[[${com.date}]]</span>
+
+                                <div class="gitment-comment-like-btn">
+                                    <svg class="gitment-heart-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50">
+                                        <path d="M25 39.7l-.6-.5C11.5 28.7 8 25 8 19c0-5 4-9 9-9 4.1 0 6.4 2.3 8 4.1 1.6-1.8 3.9-4.1 8-4.1 5 0 9 4 9 9 0 6-3.5 9.7-16.4 20.2l-.6.5zM17 12c-3.9 0-7 3.1-7 7 0 5.1 3.2 8.5 15 18.1 11.8-9.6 15-13 15-18.1 0-3.9-3.1-7-7-7-3.5 0-5.4 2.1-6.9 3.8L25 17.1l-1.1-1.3C22.4 14.1 20.5 12 17 12z"></path>
+                                    </svg>
+                                    22
+                                </div>
+                            </div>
+                            <div class="gitment-comment-body gitment-markdown"><p>[[${com.content}]]</p></div>
+                        </div>
+                    </li>
+                </ul>
             </div>
         </section>
     </div>
@@ -44,9 +78,9 @@
 <footer id="footer">
     <div class="container">
         <ul class="icons">
-            <li><a href="#" class="icon fa-weixin"><span class="label">微信</span></a></li>
-            <li><a href="#" class="icon fa-qq"><span class="label">QQ</span></a></li>
-            <li><a href="#" class="icon fa-weibo"><span class="label">微博</span></a></li>
+            <li><a onclick="shareToRenren(event)" class="icon fa-renren"><span class="label">人人</span></a></li>
+            <li><a onclick="shareToQzone(event)" class="icon fa-qq"><span class="label">QQ</span></a></li>
+            <li><a onclick="shareToSinaWB(event)" class="icon fa-weibo"><span class="label">微博</span></a></li>
         </ul>
     </div>
     <div class="copyright">

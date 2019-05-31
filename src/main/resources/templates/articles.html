@@ -2,18 +2,19 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <title th:text="${title}"></title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <!-- Scripts -->
+    <script type="text/javascript" src="js/share.js"></script>
 
 </head>
-<body>
+<body onload="setPage()">
 
 <!-- Header -->
 <header id="header">
     <div class="logo"><a href="#"> Spring News</a></div>
-    <div class="top"> <a href="login"> Login</a> <span>|</span> <a href="signup">Sign Up</a></div>
+    <div class="top"><a href="login"> Login</a> <span>|</span> <a href="signup">Sign Up</a></div>
 </header>
 
 <!-- Main -->
@@ -33,26 +34,39 @@
                     <a th:href="${article.url}">
                         <h4 th:text="${article.header}"></h4>
                     </a>
-                    <p>[<span th:text="${article.upstream}"></span> ] <span th:text="${article.brefIntroduce}"></span></p>
+                    <p>[<span th:text="${article.upstream}"></span> ] <span th:text="${article.briefIntroduce}"></span>
+                    </p>
                     <hr>
+                </div>
+                <hr>
+                <div>
+                    <ul class="pagination">
+                        <li><a th:href="${lastPage}"><<</a></li>
+                        <li th:each="page :${pages}" th:id="${page.id}">
+                            <a th:href="${page.url}" th:text="${page.index}" th:class="${page.index} eq ${currentPage}? 'active':''"></a>
+                        </li>
+                        <li><a th:href="${nextPage}"> >> </a></li>
+                    </ul>
                 </div>
             </div>
         </section>
     </div>
 </section>
 
+
 <!-- Footer -->
 <!--添加分享-->
 <footer id="footer">
     <div class="container">
         <ul class="icons">
-            <li><a href="#" class="icon fa-weixin"><span class="label">微信</span></a></li>
-            <li><a href="#" class="icon fa-qq"><span class="label">QQ</span></a></li>
-            <li><a href="#" class="icon fa-weibo"><span class="label">微博</span></a></li>
+            <li><a onclick="shareToRenren(event)" class="icon fa-renren"><span class="label">人人</span></a></li>
+            <li><a onclick="shareToQzone(event)" class="icon fa-qq"><span class="label">QQ</span></a></li>
+            <li><a onclick="shareToSinaWB(event)" class="icon fa-weibo"><span class="label">微博</span></a></li>
         </ul>
     </div>
     <div class="copyright">
-        &copy; Untitled. All rights reserved. You can get the source code from <a href="https://github.com/czhnju161220026/WebApplicationDev-2019-work">Github</a>
+        &copy; Untitled. All rights reserved. You can get the source code from <a
+            href="https://github.com/czhnju161220026/WebApplicationDev-2019-work">Github</a>
     </div>
 </footer>
 

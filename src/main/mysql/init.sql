@@ -16,10 +16,10 @@ CREATE TABLE User(
 );
 
 CREATE TABLE Comment (
-	CID INT NOT NULL,
-    NUM INT NOT NULL,
-    CONTENT text character set utf8 NOT NULL ,
-    primary key(CID)
+	UID INT NOT NULL,
+    NID INT NOT NULL,
+    CONTENT text character set utf8 NOT NULL,
+    CTIME timestamp
 );
 
 CREATE TABLE NEWS (

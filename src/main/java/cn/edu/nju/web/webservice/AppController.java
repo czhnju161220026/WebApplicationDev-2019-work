@@ -3,6 +3,9 @@ package cn.edu.nju.web.webservice;
 import cn.edu.nju.web.database.DatabaseServer;
 import cn.edu.nju.web.email.EmailSender;
 import cn.edu.nju.web.util.Article;
+
+import cn.edu.nju.web.util.MD5Util;
+import cn.edu.nju.web.util.User;
 import cn.edu.nju.web.util.Comment;
 import cn.edu.nju.web.util.Page;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.Map;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
@@ -28,15 +32,98 @@ public class AppController {
 		return "index";
 	}
 
-	@GetMapping("/signup")
-	public String signUp() {
-		return "signup";
-	}
 
-	@GetMapping("/login")
-	public String logIn() {
-		return "login";
-	}
+    @PostMapping("/signup")
+    public String verifySignUpInfo(HttpServletRequest request, Map<String, Object> map) {
+        /*获得提交的表单信息*/
+        String name = request.getParameter("name");
+        String mail = request.getParameter("mail");
+        String pwd1 = request.getParameter("pwd1");
+        String pwd2 = request.getParameter("pwd2");
+
+        /* 判断用户名或密码是否已经存在 */
+        boolean nameExist = true, mailExist = true;
+        try {
+            nameExist = DatabaseServer.isNameExist(name);
+            mailExist = DatabaseServer.isEmailExist(mail);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        if (nameExist && mailExist) {
+            map.put("msg", "邮箱和用户名已注册");
+            return "signup";
+        }
+        else if (nameExist) {
+            map.put("msg", "用户名已存在");
+            return "signup";
+        }
+        else if (mailExist) {
+            map.put("msg", "邮箱已注册");
+            return "signup";
+        }
+        else {
+            // TODO: 新建一个未激活用户插入用户表, 然后发送验证邮件
+            int uid = mail.hashCode() & 0x7fffffff;
+            String code = MD5Util.MD5Encode(mail, "utf8");
+            User user = new User(uid, name, mail, pwd1, code);
+            try {
+                DatabaseServer.addUser(user);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+//            StringBuilder code = new StringBuilder("");
+//            Random random = new Random(System.nanoTime());
+//            for(int i = 0;i < 6;i++) {
+//                code.append(random.nextInt(10));
+//            }
+//            System.out.println(code.toString());
+//            //发送电子邮件
+//
+            ExecutorService sendService = Executors.newSingleThreadExecutor();
+            sendService.execute(new Runnable() {
+                @Override
+                public void run() {
+                    EmailSender emailSender = new EmailSender();
+                    emailSender.sendVerificationCode(code, mail);
+                }
+            });
+            sendService.shutdown();
+
+//            request.setAttribute("name", name);
+//            request.setAttribute("mail", mail);
+//            String md5Code = MD5Util.MD5Encode(code.toString(), "utf8");
+//            request.setAttribute("code", md5Code);
+//            request.setAttribute("pwd", pwd1);
+            request.setAttribute("mail", mail);
+            return "verify";
+        }
+    }
+
+    @GetMapping("/login")
+    public String logIn() {
+        return "login";
+    }
+
+
+    @RequestMapping(value = "/checkCode")
+    public String checkCode(String code){
+        boolean success = false;
+        try {
+            success = DatabaseServer.activateUserByCode(code);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        if (success) {
+            return "activateSuccess";
+        }
+
+        return "login";
+    }
+
+
+   
 
 	@PostMapping("/verify")
 	public String inputVerificationCode(HttpServletRequest request) {

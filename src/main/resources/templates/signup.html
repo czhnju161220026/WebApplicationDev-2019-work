@@ -15,7 +15,7 @@
         <!--如果验证成功，触发输入验证码页面-->
         <!--参照APPController类-->
         <!--如果一个控件需要传值给后端，那么需要有name属性 -->
-        <form  method="post" onsubmit="return verify()" action="verify">
+        <form  method="post" onsubmit="return verify()" action="signup">
             <input type="text" placeholder="Your username" id="name" name="name"/>
             <input type="text" placeholder="Your email" id="mail" name="mail"/>
             <input type="password" placeholder="password" id="pwd1" name="pwd1"/>
@@ -25,6 +25,7 @@
                 <span class="text" style="color: blue"> Already a member ?</span>
                 <a href="login" class="url">Go and log in</a>
             </p>
+            <p align="center" th:text="${msg}"></p>
         </form>
     </div>
 </div>

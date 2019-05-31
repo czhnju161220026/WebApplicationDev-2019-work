@@ -10,7 +10,8 @@ import java.util.List;
 
 public class DatabaseServer {
 	private static String DBDriver = "com.mysql.cj.jdbc.Driver";
-	private static String DBUrl = "jdbc:mysql://localhost:3306/web_db?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=UTC";
+	private static String DBUrl = "jdbc:mysql://localhost:3306/web_db?useUnicode=true&characterEncoding=utf8" +
+            "&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true";
 	private static String userName = "webuser";
 	private static String passwd = "webuser";
 
@@ -74,4 +75,83 @@ public class DatabaseServer {
 		}
 		return results;
 	}
+
+	public static boolean isEmailExist(String email) throws SQLException {
+        Connection connection = null;
+        try {
+            Class.forName(DBDriver);
+            connection = DriverManager.getConnection(DBUrl,userName,passwd);
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * from USER where email='"+email+"'");
+            return resultSet.next();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        finally {
+            connection.close();
+        }
+    }
+
+    public static boolean isNameExist(String name) throws SQLException {
+        Connection connection = null;
+        try {
+            Class.forName(DBDriver);
+            connection = DriverManager.getConnection(DBUrl,userName,passwd);
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * from USER where UNAME='"+name+"'");
+            return  resultSet.next();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        finally {
+            connection.close();
+        }
+    }
+
+    public static void addUser(User user) throws SQLException {
+        Connection connection = null;
+        try {
+            Class.forName(DBDriver);
+            connection = DriverManager.getConnection(DBUrl,userName,passwd);
+            Statement statement = connection.createStatement();
+            statement.executeUpdate("insert into USER values(" + user.getUid() + ",'" +
+                user.getUserName() + "','" + user.getMail() + "','" + user.getPwd() + "'," + user.getIsActivated()
+                    + ",'" + user.getActivateCode() + "')");
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            connection.close();
+        }
+    }
+
+    public static boolean activateUserByCode(String code) throws SQLException {
+        Connection connection = null;
+        try {
+            Class.forName(DBDriver);
+            connection = DriverManager.getConnection(DBUrl,userName,passwd);
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("select * from USER where CODE='" + code +"'");
+            while (resultSet.next()) {
+                // 未激活
+                if (resultSet.getInt("ACTIVATION") == 0) {
+                    statement.executeUpdate("update USER set ACTIVATION = 1 WHERE CODE = '" + code + "'");
+                    return true;
+                }
+            }
+            return false;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        finally {
+            connection.close();
+        }
+    }
 }

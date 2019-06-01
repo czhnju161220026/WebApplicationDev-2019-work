@@ -222,4 +222,46 @@ public class DatabaseServer {
 		}
 		return results;
 	}
+
+	public static int getUserIdByName(String user) throws SQLException{
+		Connection connection = null;
+		try {
+			Class.forName(DBDriver);
+			connection = DriverManager.getConnection(DBUrl,userName,passwd);
+			Statement statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery("SELECT UID from USER where UNAME='"+user+"'");
+			//之前已经验证过用户名存在
+			resultSet.next();
+			int uid = resultSet.getInt("UID");
+			return uid;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			connection.close();
+		}
+		return -1;
+	}
+
+	public static String getUserNameByID(int id) throws SQLException{
+		Connection connection = null;
+		try {
+			Class.forName(DBDriver);
+			connection = DriverManager.getConnection(DBUrl,userName,passwd);
+			Statement statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery("SELECT UNAME from USER where UID="+id);
+			//之前已经验证过用户名存在
+			resultSet.next();
+			String userName = resultSet.getString("UNAME");
+			return userName;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			connection.close();
+		}
+		return "NotUser";
+	}
 }

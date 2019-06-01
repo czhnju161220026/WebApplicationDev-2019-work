@@ -11,8 +11,16 @@ public class Article {
 	private Integer id;
 	private String briefIntroduce;
 	private String url;
+	private String user=null;
+
+	public void setUser(String user) {
+		this.user = user;
+	}
 
 	public String getUrl() {
+		if(user != null) {
+			url += ("&user="+user);
+		}
 		return url;
 	}
 

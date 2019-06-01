@@ -13,9 +13,11 @@
 
 <!-- Header -->
 <header id="header">
-    <div class="logo"><a href="#"> Spring News</a></div>
-    <div class="top"><a href="login"> Login</a> <span>|</span> <a href="signup">Sign Up</a></div>
+    <div class="logo"><a href="#">Spring News </a></div>
+    <div class="top" th:if="${user} == null"> <a href="login"> Login</a> <span>|</span> <a href="signup">Sign Up</a></div>
+    <div class="top" th:if="${user} != null"> <a th:text="'Welcome ' +${user}"></a> <span>|</span> <a href="#">Logout</a></div>
 </header>
+
 
 <!-- Main -->
 <section id="main">

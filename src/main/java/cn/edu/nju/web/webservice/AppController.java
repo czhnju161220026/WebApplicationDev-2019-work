@@ -346,14 +346,16 @@ public class AppController {
 			request.setAttribute("article", article);
 			//评论区
 			List<Comment> comments = DatabaseServer.getCommentsByID(id);
-			int uid = DatabaseServer.getUserIdByName(user);
-			//如果已经点过赞了，则设置为true
-			for(Comment comment : comments) {
-				if(!DatabaseServer.hasNotThumbedUpBefore(comment.getCid(),uid)) {
-					comment.setThumbUp(true);
-				}
-				else {
-					comment.setThumbUp(false);
+			if(user!=null) {
+				int uid = DatabaseServer.getUserIdByName(user);
+				//如果已经点过赞了，则设置为true
+				for(Comment comment : comments) {
+					if(!DatabaseServer.hasNotThumbedUpBefore(comment.getCid(),uid)) {
+						comment.setThumbUp(true);
+					}
+					else {
+						comment.setThumbUp(false);
+					}
 				}
 			}
 			request.setAttribute("coms", comments);

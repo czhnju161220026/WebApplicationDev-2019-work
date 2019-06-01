@@ -23,6 +23,7 @@ public class Comment {
 		this.content = content;
 		this.date = new Date();
 		this.num = num;
+		this.thumbUp = false;
 
 		try {
 			this.userName = DatabaseServer.getUserNameByID(userID);

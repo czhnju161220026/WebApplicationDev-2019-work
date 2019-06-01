@@ -18,7 +18,9 @@ CREATE TABLE USER(
 CREATE TABLE Comment (
 	UID INT NOT NULL,
     NID INT NOT NULL,
+    CID INT NOT NULL,
     CONTENT text character set utf8 NOT NULL,
+    NUM INT not NULL,
     CTIME timestamp
 );
 
@@ -42,4 +44,9 @@ CREATE TABLE NI (
 	  NID INT NOT NULL,
     IMAGEID INT NOT NULL,
     primary key(NID)
+);
+
+CREATE TABLE USERCOMMENT (
+	UID INT NOT NULL,
+    CID INT NOT NULL
 );

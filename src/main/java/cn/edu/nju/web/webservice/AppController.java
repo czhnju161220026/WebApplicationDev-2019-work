@@ -13,27 +13,48 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.Map;
 import java.util.List;
-import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+
 
 @Controller
 @EnableAutoConfiguration
 public class AppController {
 	//Get和Post都能从服务器获取数据，但是get获取数据通过地址栏参数，post通过报文，因此post更适合需要加密的场合
 	//post可以向服务器发送数据
-	//主页
+	//验证用户是否活跃
+	private boolean userIsActive(HttpServletRequest request, String user) {
+		Cookie[] cookies = request.getCookies();
+		boolean cookieIsValid = false;
+		if (cookies != null) {
+			for(Cookie cookie : cookies) {
+				//System.out.println(cookie.getName()+","+cookie.getValue());
+				if(cookie.getName().equals("user") && cookie.getValue().equals(user)) {
+					cookieIsValid = true;
+					break;
+				}
+			}
+		}
+		return cookieIsValid;
+	}
+
 	@GetMapping("/")
 	public String index(HttpServletRequest request) {
 		String user = request.getParameter("user");
-		/* TODO: 这里应该进行session验证，检测用户是否还活跃
+		/* TODO: 这里应该进行Cookie验证，检测用户是否还活跃
 		 * 在文章等页面也需要验证
 		 * 如果不活跃，强制跳转到登录页面
 		 */
+		if(user!=null && !userIsActive(request, user)) {
+			return "redirect:/login";
+		}
 		request.setAttribute("user", user);
 		return "index";
 	}
@@ -117,7 +138,7 @@ public class AppController {
 
 	// 对用户提交的信息进行验证
 	@PostMapping("/login")
-	public String verifyLoginInfo(HttpServletRequest request) {
+	public String verifyLoginInfo(HttpServletRequest request, HttpServletResponse response) {
 		String userName = request.getParameter("name");
 		String passwd = request.getParameter("pwd");
 		//System.out.println(userName+" "+passwd);
@@ -132,7 +153,13 @@ public class AppController {
 				return "login";
 			} else {
 				//验证通过
-				//TODO:加入session
+				//TODO:加入Cookie
+				Cookie cookie = new Cookie("user",userName);
+				cookie.setMaxAge(600); //十分钟后过期
+				response.addCookie(cookie);
+				String previousPage = request.getHeader("Referer");
+				//TODO:重定位到之前的页面
+
 				return "redirect:/?user=" + userName;
 			}
 		} catch (SQLException e) {
@@ -141,6 +168,15 @@ public class AppController {
 		return "login";
 	}
 
+	@GetMapping("/logout")
+	public String logOut(HttpServletRequest request, HttpServletResponse response) {
+		String user = request.getParameter("user");
+		Cookie cookie = new Cookie("user",null);
+		cookie.setMaxAge(0);
+		response.addCookie(cookie);
+		//TODO: 重定位到之前的页面
+		return "redirect:/";
+	}
 
 	@RequestMapping(value = "/checkCode")
 	public String checkCode(String code) {
@@ -165,7 +201,10 @@ public class AppController {
 		String category = request.getParameter("category");
 		int page = Integer.parseInt(request.getParameter("page"));
 		String user = request.getParameter("user");
-		//TODO:进行session验证
+		//TODO:进行cookie验证
+		if(user!=null && !userIsActive(request, user)) {
+			return "redirect:/login";
+		}
 		if (user != null) {
 			request.setAttribute("user", user);
 		}
@@ -295,6 +334,9 @@ public class AppController {
 	public String article(HttpServletRequest request) {
 		int id = Integer.parseInt(request.getParameter("id"));
 		String user = request.getParameter("user");
+		if(user!=null && !userIsActive(request, user)) {
+			return "redirect:/login";
+		}
 		if (user != null) {
 			request.setAttribute("user", user);
 		}
@@ -304,6 +346,16 @@ public class AppController {
 			request.setAttribute("article", article);
 			//评论区
 			List<Comment> comments = DatabaseServer.getCommentsByID(id);
+			int uid = DatabaseServer.getUserIdByName(user);
+			//如果已经点过赞了，则设置为true
+			for(Comment comment : comments) {
+				if(!DatabaseServer.hasNotThumbedUpBefore(comment.getCid(),uid)) {
+					comment.setThumbUp(true);
+				}
+				else {
+					comment.setThumbUp(false);
+				}
+			}
 			request.setAttribute("coms", comments);
 			//
 		} catch (SQLException e) {
@@ -317,9 +369,7 @@ public class AppController {
 	public String sendComment(HttpServletRequest request) {
 		//TODO:获取用户登录状态
 		String user = request.getParameter("user");
-		System.out.println(user);
-		if (user == null) {
-			System.out.println("User is null");
+		if(user!=null && !userIsActive(request, user)) {
 			return "redirect:/login";
 		}
 		String id = request.getParameter("articleID");
@@ -331,6 +381,28 @@ public class AppController {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return "redirect:/article?id=" + id;
+		return "redirect:/article?id=" + id + "&user=" + user;
+	}
+
+	//点赞
+	@GetMapping("thumbUp")
+	public String thumbUp(HttpServletRequest request) {
+		String userName = request.getParameter("user");
+		int cid = Integer.parseInt(request.getParameter("cid"));
+		String aid = request.getParameter("articleID");
+		if(userName==null || !userIsActive(request, userName)) {
+			return "redirect:/login";
+		}
+		try {
+			int uid = DatabaseServer.getUserIdByName(userName);
+			if(DatabaseServer.hasNotThumbedUpBefore(cid,uid)) {
+				DatabaseServer.thumbUp(cid,uid);
+			}
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return "redirect:/article?id=" + aid + "&user=" + userName;
 	}
 }

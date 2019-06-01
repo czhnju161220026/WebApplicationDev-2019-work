@@ -187,8 +187,17 @@ public class DatabaseServer {
 			SimpleDateFormat ft = new SimpleDateFormat ("yyyy-MM-dd HH:mm:ss");
 			ft.setTimeZone(TimeZone.getTimeZone("Etc/Greenwich"));
 			Statement statement = connection.createStatement();
-			String sql = "insert into Comment values ( "+userID+", "+articalID+", '"+content+"', '"+ft.format(dNow)+"')";
+			//为新的评论分配一个id
+			int cid = 0;
+			String sql = "select max(CID) from Comment";
+			ResultSet resultSet = statement.executeQuery(sql);
+			while(resultSet.next()) {
+				cid = resultSet.getInt(1);
+			}
+			cid += 1;
+			sql = "insert into Comment values ( "+userID+", "+articalID+", "+cid+", '"+content+"', '"+0+"','"+ft.format(dNow)+"')";
 			statement.executeUpdate(sql);
+
 			return true;
 		}
 		catch (Exception e) {
@@ -209,7 +218,7 @@ public class DatabaseServer {
 			Statement statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery("SELECT * from Comment where NID="+id+" order by CTIME desc" );
 			while (resultSet.next()) {
-				Comment comment = new Comment(resultSet.getInt("UID"), resultSet.getInt("NID"), resultSet.getString("CONTENT"));
+				Comment comment = new Comment(resultSet.getInt("UID"),resultSet.getInt("CID") ,resultSet.getInt("NID"), resultSet.getString("CONTENT"),resultSet.getInt("NUM"));
 				comment.setDate(resultSet.getTimestamp("CTIME"));
 				results.add(comment);
 			}
@@ -263,5 +272,51 @@ public class DatabaseServer {
 			connection.close();
 		}
 		return "NotUser";
+	}
+
+	public static boolean hasNotThumbedUpBefore(int cid, int uid) throws SQLException{
+		Connection connection = null;
+		boolean exist = false;
+		try {
+			Class.forName(DBDriver);
+			connection = DriverManager.getConnection(DBUrl,userName,passwd);
+			Statement statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery("SELECT UID from USERCOMMENT where CID="+cid);
+			//之前已经验证过用户名存在
+			while(resultSet.next()) {
+				int id = resultSet.getInt("UID");
+				if(id == uid) {
+					exist = true;
+					break;
+				}
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			connection.close();
+		}
+		return !exist;
+	}
+
+	public static void thumbUp(int cid, int uid) throws SQLException{
+		Connection connection = null;
+		boolean exist = false;
+		try {
+			Class.forName(DBDriver);
+			connection = DriverManager.getConnection(DBUrl,userName,passwd);
+			Statement statement = connection.createStatement();
+			String sql = "update Comment set NUM = NUM + 1 where CID=" + cid;
+			statement.executeUpdate(sql);
+			sql = "insert into USERCOMMENT values("+uid+","+cid+")";
+			statement.executeUpdate(sql);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			connection.close();
+		}
 	}
 }

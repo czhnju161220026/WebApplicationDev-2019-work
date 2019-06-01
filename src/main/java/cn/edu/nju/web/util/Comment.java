@@ -9,15 +9,21 @@ import java.util.Date;
 public class Comment {
 	private int userID;
 	private int articalID;
+	private int num;
+	private int cid;
 	private String userName;
 	private String content;
 	private Date date;
+	private boolean thumbUp;
 
-	public Comment(int userID, int articalID, String content) {
+	public Comment(int userID,int cid ,int articalID, String content, int num) {
 		this.userID = userID;
+		this.cid = cid;
 		this.articalID = articalID;
 		this.content = content;
 		this.date = new Date();
+		this.num = num;
+
 		try {
 			this.userName = DatabaseServer.getUserNameByID(userID);
 		}
@@ -44,5 +50,21 @@ public class Comment {
 
 	public void setDate(Date date) {
 		this.date = date;
+	}
+
+	public boolean isThumbUp() {
+		return thumbUp;
+	}
+
+	public void setThumbUp(boolean thumbUp) {
+		this.thumbUp = thumbUp;
+	}
+
+	public int getNum() {
+		return num;
+	}
+
+	public int getCid() {
+		return cid;
 	}
 }

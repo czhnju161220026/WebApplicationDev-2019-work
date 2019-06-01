@@ -15,7 +15,7 @@
 <header id="header">
     <div class="logo"><a href="#">Spring News </a></div>
     <div class="top" th:if="${user} == null"> <a href="login"> Login</a> <span>|</span> <a href="signup">Sign Up</a></div>
-    <div class="top" th:if="${user} != null"> <a th:text="'Welcome ' +${user}"></a> <span>|</span> <a href="#">Logout</a></div>
+    <div class="top" th:if="${user} != null"> <a th:text="'Welcome ' +${user}"></a> <span>|</span> <a href="logout">Logout</a></div>
 </header>
 
 <!-- Main -->
@@ -59,8 +59,8 @@
 
                                 <div class="gitment-comment-like-btn">
                                     <!-- fa-heart-o 是空心的心形，点赞后可以判断，将其设置为实心的心形'fa-heartbeat'-->
-                                    <a class="icon fa-heart-o" viewBox="0 0 50 50 " href="#"></a>
-                                    22
+                                    <a th:class="${com.thumbUp}?'icon fa-heartbeat':'icon fa-heart-o'" viewBox="0 0 50 50 " th:href="@{'thumbUp?articleID='+${article.id}+'&cid='+${com.cid}+'&user='+${user}}"></a>
+                                    [[${com.num}]]
                                 </div>
                             </div>
                             <div class="gitment-comment-body gitment-markdown"><p>[[${com.content}]]</p></div>

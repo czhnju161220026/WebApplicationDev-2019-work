@@ -5,7 +5,7 @@ create user 'webuser'@'%' identified by 'webuser';
 grant all privileges on web_db.* to 'webuser'@'%' with grant option;
 use web_db;
 
-CREATE TABLE User(
+CREATE TABLE USER(
 	UID INT NOT NULL,
     UNAME VARCHAR(10) character set utf8 NOT NULL,
     EMAIL VARCHAR(40) character set utf8 NOT NULL,

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <title>Sign Up!</title>
     <link rel="stylesheet" type="text/css" href="css/style.css">
-    <script src="js/sing_up.js" type="text/javascript"></script>
+    <script src="js/sign_up.js" type="text/javascript"></script>
 </head>
 <body>
 <div class="wrap">
@@ -25,9 +25,13 @@
                 <span class="text" style="color: blue"> Already a member ?</span>
                 <a href="login" class="url">Go and log in</a>
             </p>
-            <p align="center" th:text="${msg}"></p>
         </form>
     </div>
+</div>
+<div th:class="${flag} eq 'show' ? 'window':'window hide'"  id="window">
+    <p  align="center" class="message" id="message" th:text="${msg}" >Wrong Password, Please Confirm</p>
+    <br><br>
+    <input type="button" class="button" value="OK" onclick="retype()">
 </div>
 </body>
 </html>

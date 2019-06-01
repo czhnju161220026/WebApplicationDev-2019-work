@@ -32,6 +32,10 @@ public class AppController {
 		return "index";
 	}
 
+	@GetMapping("/signup")
+	public String signUp(HttpServletRequest request) {
+		return  "signup";
+	}
 
     @PostMapping("/signup")
     public String verifySignUpInfo(HttpServletRequest request, Map<String, Object> map) {
@@ -51,14 +55,17 @@ public class AppController {
             e.printStackTrace();
         }
         if (nameExist && mailExist) {
+        	map.put("flag", "show");
             map.put("msg", "邮箱和用户名已注册");
             return "signup";
         }
         else if (nameExist) {
+			map.put("flag", "show");
             map.put("msg", "用户名已存在");
             return "signup";
         }
         else if (mailExist) {
+			map.put("flag", "show");
             map.put("msg", "邮箱已注册");
             return "signup";
         }
@@ -122,42 +129,6 @@ public class AppController {
         return "login";
     }
 
-
-   
-
-	@PostMapping("/verify")
-	public String inputVerificationCode(HttpServletRequest request) {
-		/*获得提交的表单信息*/
-		String name = request.getParameter("name");
-		String mail = request.getParameter("mail");
-		String pwd1 = request.getParameter("pwd1");
-		String pwd2 = request.getParameter("pwd2");
-
-		//TODO: 应该有一个EmailSender类，完成发送验证码的工作
-		StringBuilder code = new StringBuilder("");
-		Random random = new Random(System.nanoTime());
-		for (int i = 0; i < 6; i++) {
-			code.append(random.nextInt(10));
-		}
-		System.out.println(code.toString());
-		//发送电子邮件
-
-		ExecutorService sendService = Executors.newSingleThreadExecutor();
-		sendService.execute(new Runnable() {
-			@Override
-			public void run() {
-				EmailSender emailSender = new EmailSender();
-				emailSender.sendVerificationCode(code.toString(), mail);
-			}
-		});
-		sendService.shutdown();
-
-		/*设置动态页面*/
-		request.setAttribute("name", name);
-		request.setAttribute("mail", mail);
-		request.setAttribute("image", "image/test.jpg");
-		return "verify";
-	}
 
 	//通过GetMapping获取文章类型，然后返回相关类别文章的动态页面
 	@GetMapping(value = "/articles")

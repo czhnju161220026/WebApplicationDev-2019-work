@@ -383,7 +383,7 @@ public class AppController {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return "redirect:/article?id=" + id + "&user=" + user;
+		return "redirect:/article?id=" + id + "&user=" + user+ "#commentArea";
 	}
 
 	//点赞
@@ -405,6 +405,6 @@ public class AppController {
 			e.printStackTrace();
 		}
 
-		return "redirect:/article?id=" + aid + "&user=" + userName;
+		return "redirect:/article?id=" + aid + "&user=" + userName + "#commentArea";
 	}
 }

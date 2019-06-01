@@ -113,6 +113,28 @@ public class DatabaseServer {
         }
     }
 
+    //查询指定用户的密码是否相同
+	public static boolean isPwdCorrect(String name,String pwd) throws SQLException {
+		Connection connection = null;
+		try {
+			Class.forName(DBDriver);
+			connection = DriverManager.getConnection(DBUrl,userName,passwd);
+			Statement statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery("SELECT PWD from USER where UNAME='"+name+"'");
+			//之前已经验证过用户名存在
+			resultSet.next();
+			String correctPwd = resultSet.getString("PWD");
+			return correctPwd.equals(pwd);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		finally {
+			connection.close();
+		}
+	}
+
     public static void addUser(User user) throws SQLException {
         Connection connection = null;
         try {

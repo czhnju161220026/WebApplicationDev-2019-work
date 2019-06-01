@@ -112,6 +112,35 @@ public class AppController {
         return "login";
     }
 
+    // 对用户提交的信息进行验证
+    @PostMapping("/login")
+	public String verifyLoginInfo(HttpServletRequest request) {
+		String userName = request.getParameter("name");
+		String passwd = request.getParameter("pwd");
+		//System.out.println(userName+" "+passwd);
+		try {
+			if(!DatabaseServer.isNameExist(userName)) {
+				request.setAttribute("flag","show");
+				request.setAttribute("msg", "用户名不存在");
+				return "login";
+			}
+			else if(!DatabaseServer.isPwdCorrect(userName, passwd)) {
+				request.setAttribute("flag","show");
+				request.setAttribute("msg", "密码错误");
+				return "login";
+			}
+			else {
+				//验证通过
+				//TODO:加入session
+				return "index";
+			}
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return "login";
+	}
+
 
     @RequestMapping(value = "/checkCode")
     public String checkCode(String code){

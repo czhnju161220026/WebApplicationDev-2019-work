@@ -8,7 +8,7 @@
     <script src="js/sign_up.js" type="text/javascript"></script>
 </head>
 <body>
-<div class="wrap">
+<div th:class="${flag} eq 'show'?'wrap blur':'wrap'" id="background">
     <div class="container">
         <h1>Sign Up</h1>
         <!-- 当点击submit时，先调用sing_up.js文件中的verify()函数进行输入合法性验证-->

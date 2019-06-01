@@ -33,7 +33,7 @@
             <div class="content">
                 <h5 th:if="${articles.empty}">该板块暂无文章，去其他板块逛逛吧！</h5>
                 <div th:each="article : ${articles}">
-                    <a th:href="${article.url}">
+                    <a th:href="${article.url}" target="_blank">
                         <h4 th:text="${article.header}"></h4>
                     </a>
                     <p>[<span th:text="${article.upstream}"></span> ] <span th:text="${article.briefIntroduce}"></span>

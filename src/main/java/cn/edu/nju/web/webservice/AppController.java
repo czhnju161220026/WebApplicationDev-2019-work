@@ -147,7 +147,11 @@ public class AppController {
 				request.setAttribute("flag", "show");
 				request.setAttribute("msg", "用户名不存在");
 				return "login";
-			} else if (!DatabaseServer.isPwdCorrect(userName, passwd)) {
+			} else if (!DatabaseServer.isUserActivated(userName)) {
+				request.setAttribute("flag", "show");
+				request.setAttribute("msg", "用户未激活");
+			}
+			else if (!DatabaseServer.isPwdCorrect(userName, passwd)) {
 				request.setAttribute("flag", "show");
 				request.setAttribute("msg", "密码错误");
 				return "login";

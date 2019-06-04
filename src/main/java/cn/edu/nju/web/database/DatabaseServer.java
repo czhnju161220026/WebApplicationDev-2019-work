@@ -135,6 +135,27 @@ public class DatabaseServer {
 		}
 	}
 
+	public static boolean isUserActivated(String name) throws SQLException {
+		Connection connection = null;
+		try {
+			Class.forName(DBDriver);
+			connection = DriverManager.getConnection(DBUrl,userName,passwd);
+			Statement statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery("SELECT ACTIVATION from USER where UNAME='"+name+"'");
+			//之前已经验证过用户名存在
+			resultSet.next();
+			int activation = resultSet.getInt("ACTIVATION");
+			return (activation == 1);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		finally {
+			connection.close();
+		}
+	}
+
     public static void addUser(User user) throws SQLException {
         Connection connection = null;
         try {

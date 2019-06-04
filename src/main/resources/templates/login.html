@@ -8,11 +8,11 @@
     <script type="text/javascript" src="js/log_in.js"></script>
 </head>
 <body>
-<div class="wrap" id="background">
+<div th:class="${flag} eq 'show'?'wrap blur':'wrap'" id="background">
     <div class="container">
         <h1>Log in</h1>
 
-        <form  onsubmit="return judge()">
+        <form  method="post" action="login">
             <input type="text" placeholder="Your username" id="name" name="name"/>
             <input type="password" placeholder="password" id="pwd" name="pwd"/>
             <input type="submit" value="Log in"/>
@@ -24,8 +24,8 @@
     </div>
 </div>
 <!--在这里隐藏了一个控件，当hide被去除时，它会显示-->
-<div class="window hide" id="window">
-    <p  align="center" class="message" id="message">Wrong Passward, Please Confirm</p>
+<div th:class="${flag} eq 'show' ? 'window':'window hide'"  id="window">
+    <p  align="center" class="message" id="message" th:text="${msg}" >Wrong Password, Please Confirm</p>
     <br><br>
     <input type="button" class="button" value="OK" onclick="retype()">
 </div>

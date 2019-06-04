@@ -5,17 +5,22 @@ create user 'webuser'@'%' identified by 'webuser';
 grant all privileges on web_db.* to 'webuser'@'%' with grant option;
 use web_db;
 
-CREATE TABLE User(
-	  UID INT NOT NULL,
+CREATE TABLE USER(
+	UID INT NOT NULL,
     UNAME VARCHAR(10) character set utf8 NOT NULL,
     EMAIL VARCHAR(40) character set utf8 NOT NULL,
+    PWD VARCHAR(20) character set utf8 NOT NULL,
+    ACTIVATION INT NOT NULL,
+    CODE VARCHAR(40) character set utf8,
     primary key(UID)
 );
 
 CREATE TABLE Comment (
 	UID INT NOT NULL,
     NID INT NOT NULL,
+    CID INT NOT NULL,
     CONTENT text character set utf8 NOT NULL,
+    NUM INT not NULL,
     CTIME timestamp
 );
 
@@ -39,4 +44,9 @@ CREATE TABLE NI (
 	  NID INT NOT NULL,
     IMAGEID INT NOT NULL,
     primary key(NID)
+);
+
+CREATE TABLE USERCOMMENT (
+	UID INT NOT NULL,
+    CID INT NOT NULL
 );

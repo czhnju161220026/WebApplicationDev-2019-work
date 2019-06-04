@@ -8,14 +8,14 @@
     <link rel="stylesheet" type="text/css" href="css/comment.css">
     <!-- Scripts -->
     <script type="text/javascript" src="js/share.js"></script>
-    <script type="text/javascript" src="js/comment.js"></script>
 </head>
 <body>
 
 <!-- Header -->
 <header id="header">
-    <div class="logo"><a href="#"> Spring News</a></div>
-    <div class="top"> <a href="login"> Login</a> <span>|</span> <a href="signup">Sign Up</a></div>
+    <div class="logo"><a href="#">Spring News </a></div>
+    <div class="top" th:if="${user} == null"> <a href="login"> Login</a> <span>|</span> <a href="signup">Sign Up</a></div>
+    <div class="top" th:if="${user} != null"> <a th:text="'Welcome ' +${user}"></a> <span>|</span> <a href="logout">Logout</a></div>
 </header>
 
 <!-- Main -->
@@ -37,7 +37,7 @@
             <h4>评论区</h4>
 
             <!-- 输入评论 -->
-            <form  onsubmit="return judgeComment()" th:action="@{'sendComment?articleID='+${article.id}}" method="post">
+            <form  onsubmit="return judgeComment()" th:action="@{'sendComment?articleID='+${article.id} +'&user='+${user}}" method="post">
                 <textarea name="content" id="content" placeholder="Leave your comment here" rows="4"></textarea>
                 <input type="submit" value="Send" style="display:block;margin:0 auto"/>
             </form>
@@ -53,15 +53,14 @@
                         <div class="gitment-comment-main">
                             <div class="gitment-comment-header">
                                 <a class="gitment-comment-name">
-                                    [[${com.userID}]]
+                                    [[${com.userName}]]
                                 </a>
                                 <span class="gitment-comment-time">&nbsp;[[${com.date}]]</span>
 
                                 <div class="gitment-comment-like-btn">
-                                    <svg class="gitment-heart-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50">
-                                        <path d="M25 39.7l-.6-.5C11.5 28.7 8 25 8 19c0-5 4-9 9-9 4.1 0 6.4 2.3 8 4.1 1.6-1.8 3.9-4.1 8-4.1 5 0 9 4 9 9 0 6-3.5 9.7-16.4 20.2l-.6.5zM17 12c-3.9 0-7 3.1-7 7 0 5.1 3.2 8.5 15 18.1 11.8-9.6 15-13 15-18.1 0-3.9-3.1-7-7-7-3.5 0-5.4 2.1-6.9 3.8L25 17.1l-1.1-1.3C22.4 14.1 20.5 12 17 12z"></path>
-                                    </svg>
-                                    22
+                                    <!-- fa-heart-o 是空心的心形，点赞后可以判断，将其设置为实心的心形'fa-heartbeat'-->
+                                    <a th:class="${com.thumbUp}?'icon fa-heartbeat':'icon fa-heart-o'" viewBox="0 0 50 50 " th:href="@{'thumbUp?articleID='+${article.id}+'&cid='+${com.cid}+'&user='+${user}}"></a>
+                                    [[${com.num}]]
                                 </div>
                             </div>
                             <div class="gitment-comment-body gitment-markdown"><p>[[${com.content}]]</p></div>
@@ -87,6 +86,24 @@
         &copy; Untitled. All rights reserved. You can get the source code from <a href="https://github.com/czhnju161220026/WebApplicationDev-2019-work">Github</a>
     </div>
 </footer>
+
+<script th:inline="javascript">
+    function judgeComment() {
+        var content = document.getElementById("content").value;
+        var Regx = /\S/;
+        if(!Regx.test(content)) {
+            alert("请输入评论内容！");
+            return false;
+        }
+
+        user = /*[[${user}]]*/ null;
+        if(user==null) {
+            alert("评论前请先登录！")
+            return false;
+        }
+        return true;
+    }
+</script>
 
 </body>
 </html>

@@ -4,16 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Page {
-	public static List<Page> getPages(String category,List<Article> articleList) {
+	public static List<Page> getPages(String category, List<Article> articleList) {
 		List<Page> pages = new ArrayList<>();
 		int numOfArticles = articleList.size();
-		int numOfPages = (int)Math.ceil((double)numOfArticles / 10);
-		for(int i = 0;i < numOfPages; i++) {
+		int numOfPages = (int) Math.ceil((double) numOfArticles / 10);
+		for (int i = 0; i < numOfPages; i++) {
 			Page page = new Page();
 			page.setCategory(category);
 			page.setIndex(i + 1);
-			page.setId(""+(i+1));
-			page.setUrl("/articles?category="+category+"&page="+page.index);
+			page.setId("" + (i + 1));
+			page.setUrl("/articles?category=" + category + "&page=" + page.index);
 			pages.add(page);
 		}
 
@@ -24,7 +24,11 @@ public class Page {
 	private String id;
 	private String category;
 	private String url;
+	private String user = null;
 
+	public void setUser(String user) {
+		this.user = user;
+	}
 
 	public int getIndex() {
 		return index;
@@ -51,6 +55,9 @@ public class Page {
 	}
 
 	public String getUrl() {
+		if(user!=null) {
+			url += ("&user=" + user);
+		}
 		return url;
 	}
 

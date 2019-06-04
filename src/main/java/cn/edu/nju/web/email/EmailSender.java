@@ -22,8 +22,9 @@ public class EmailSender {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom(username);
         message.setTo(address);
-        message.setSubject("验证码");
-        message.setText("Your verification code is: "+code);
+        message.setSubject("激活邮件");
+        //message.setText("Your verification code is: "+code);
+        message.setText("请访问:\"http://localhost:8080/checkCode?code="+code+"\""+ "激活账号");
         mailSender.send(message);
         System.out.println("Send verification code:"+code+" to "+address+" successfully. ");
     }

@@ -237,7 +237,7 @@ public class DatabaseServer {
 			Class.forName(DBDriver);
 			connection = DriverManager.getConnection(DBUrl,userName,passwd);
 			Statement statement = connection.createStatement();
-			ResultSet resultSet = statement.executeQuery("SELECT * from Comment where NID="+id+" order by CTIME desc" );
+			ResultSet resultSet = statement.executeQuery("SELECT * from Comment where NID="+id+" order by NUM desc, CTIME desc" );
 			while (resultSet.next()) {
 				Comment comment = new Comment(resultSet.getInt("UID"),resultSet.getInt("CID") ,resultSet.getInt("NID"), resultSet.getString("CONTENT"),resultSet.getInt("NUM"));
 				comment.setDate(resultSet.getTimestamp("CTIME"));

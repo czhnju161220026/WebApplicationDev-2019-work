@@ -340,4 +340,23 @@ public class DatabaseServer {
 			connection.close();
 		}
 	}
+
+	public static void cancelThumbUp(int cid, int uid) throws SQLException{
+		Connection connection = null;
+		try {
+			Class.forName(DBDriver);
+			connection = DriverManager.getConnection(DBUrl,userName,passwd);
+			Statement statement = connection.createStatement();
+			String sql = "update Comment set NUM = NUM - 1 where CID=" + cid;
+			statement.executeUpdate(sql);
+			sql = "delete from USERCOMMENT where UID="+uid+" and CID="+cid;
+			statement.executeUpdate(sql);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			connection.close();
+		}
+	}
 }

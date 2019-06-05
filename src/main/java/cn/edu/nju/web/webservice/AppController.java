@@ -403,6 +403,8 @@ public class AppController {
 			int uid = DatabaseServer.getUserIdByName(userName);
 			if(DatabaseServer.hasNotThumbedUpBefore(cid,uid)) {
 				DatabaseServer.thumbUp(cid,uid);
+			} else {
+				DatabaseServer.cancelThumbUp(cid,uid);
 			}
 		}
 		catch (SQLException e) {

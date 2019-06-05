@@ -20,7 +20,7 @@ CREATE TABLE Comment (
     NID INT NOT NULL,
     CID INT NOT NULL,
     CONTENT text character set utf8 NOT NULL,
-    NUM INT not NULL,
+    THUMBS INT not NULL,
     CTIME timestamp
 );
 
@@ -46,7 +46,7 @@ CREATE TABLE NI (
     primary key(NID)
 );
 
-CREATE TABLE USERCOMMENT (
+CREATE TABLE THUMBSUP (
 	UID INT NOT NULL,
     CID INT NOT NULL
 );

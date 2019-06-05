@@ -237,9 +237,9 @@ public class DatabaseServer {
 			Class.forName(DBDriver);
 			connection = DriverManager.getConnection(DBUrl,userName,passwd);
 			Statement statement = connection.createStatement();
-			ResultSet resultSet = statement.executeQuery("SELECT * from Comment where NID="+id+" order by NUM desc, CTIME desc" );
+			ResultSet resultSet = statement.executeQuery("SELECT * from Comment where NID="+id+" order by THUMBS desc, CTIME desc" );
 			while (resultSet.next()) {
-				Comment comment = new Comment(resultSet.getInt("UID"),resultSet.getInt("CID") ,resultSet.getInt("NID"), resultSet.getString("CONTENT"),resultSet.getInt("NUM"));
+				Comment comment = new Comment(resultSet.getInt("UID"),resultSet.getInt("CID") ,resultSet.getInt("NID"), resultSet.getString("CONTENT"),resultSet.getInt("THUMBS"));
 				comment.setDate(resultSet.getTimestamp("CTIME"));
 				results.add(comment);
 			}
@@ -302,7 +302,7 @@ public class DatabaseServer {
 			Class.forName(DBDriver);
 			connection = DriverManager.getConnection(DBUrl,userName,passwd);
 			Statement statement = connection.createStatement();
-			ResultSet resultSet = statement.executeQuery("SELECT UID from USERCOMMENT where CID="+cid);
+			ResultSet resultSet = statement.executeQuery("SELECT UID from THUMBSUP where CID="+cid);
 			//之前已经验证过用户名存在
 			while(resultSet.next()) {
 				int id = resultSet.getInt("UID");
@@ -328,9 +328,9 @@ public class DatabaseServer {
 			Class.forName(DBDriver);
 			connection = DriverManager.getConnection(DBUrl,userName,passwd);
 			Statement statement = connection.createStatement();
-			String sql = "update Comment set NUM = NUM + 1 where CID=" + cid;
+			String sql = "update Comment set THUMBS = THUMBS + 1 where CID=" + cid;
 			statement.executeUpdate(sql);
-			sql = "insert into USERCOMMENT values("+uid+","+cid+")";
+			sql = "insert into THUMBSUP values("+uid+","+cid+")";
 			statement.executeUpdate(sql);
 		}
 		catch (Exception e) {
@@ -347,9 +347,9 @@ public class DatabaseServer {
 			Class.forName(DBDriver);
 			connection = DriverManager.getConnection(DBUrl,userName,passwd);
 			Statement statement = connection.createStatement();
-			String sql = "update Comment set NUM = NUM - 1 where CID=" + cid;
+			String sql = "update Comment set THUMBS = THUMBS - 1 where CID=" + cid;
 			statement.executeUpdate(sql);
-			sql = "delete from USERCOMMENT where UID="+uid+" and CID="+cid;
+			sql = "delete from THUMBSUP where UID="+uid+" and CID="+cid;
 			statement.executeUpdate(sql);
 		}
 		catch (Exception e) {

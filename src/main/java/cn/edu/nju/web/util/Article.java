@@ -72,7 +72,7 @@ public class Article {
 
 	public void setContent(String content) {
 		this.content = content;
-		this.briefIntroduce = content.substring(0,50 > content.length() ? content.length() - 1 : 50)+"...";
+		this.briefIntroduce = content.substring(0,50 > content.length() ? content.length()  : 50)+"...";
 	}
 
 	public Article(String header, String content) {
